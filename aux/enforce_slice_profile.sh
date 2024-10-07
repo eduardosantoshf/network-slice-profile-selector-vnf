@@ -1,6 +1,6 @@
 #!/bin/bash
 
-API_URL="http://10.16.10.74:8000"
+API_URL="https://webhook.site/acaa8378-bab1-49e2-8c3a-d0f3d235df91"
 # Check if profile is provided
 if [ -z "$1" ]; then
   echo "Usage: $0 <profile>"
