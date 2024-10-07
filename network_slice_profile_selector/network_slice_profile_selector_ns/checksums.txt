@@ -1,0 +1,2 @@
+8688e5130f229bbfb7ce523b97f21251	network_slice_profile_selector_ns/README.md
+a396144c459b8560f39c56fac5e11fc7	network_slice_profile_selector_ns/network_slice_profile_selector_nsd.yaml

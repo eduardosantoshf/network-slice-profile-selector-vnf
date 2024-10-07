@@ -1,0 +1,13 @@
+name: network-slice-profile-selector
+summary: This charm interacts with the ITAv Network Slicing API and Changes the Profile of a Network Slice
+maintainer: Eduardo Santos <eduardosantoshf@av.it.pt>
+description: |
+  This charm is part of a juju charms development tutorial.
+tags:
+  - nfv
+subordinate: false
+series:
+  - focal
+peers: # This will give HA capabilities to your Proxy Charm
+  proxypeer:
+    interface: proxypeer

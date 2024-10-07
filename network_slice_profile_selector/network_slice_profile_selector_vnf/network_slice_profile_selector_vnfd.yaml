@@ -1,0 +1,97 @@
+vnfd:
+  description: A VNF that interacts with the ITAv Network Slicing API and Changes the Profile of a Network Slice
+  mgmt-cp: vnf-vdu1-ext
+  int-virtual-link-desc:
+  - id: internal-vl
+    flavour:
+    - id: internal-vl-flavor
+  product-name: network_slice_profile_selector_vnf
+  id: network_slice_profile_selector_vnf
+  df:
+  - id: default-df
+    instantiation-level:
+    - id: default-instantiation-level
+      vdu-level:
+      - number-of-instances: "1"
+        vdu-id: vdu1
+    vdu-profile:
+    - id: vdu1
+      min-number-of-instances: "1"
+    # Juju/LCM Actions
+    lcm-operations-configuration:
+      operate-vnf-op-config:
+        day1-2:
+        - execution-environment-list:
+          - id: configure-vnf
+            external-connection-point-ref: vnf-vdu1-ext
+            juju:
+              charm: network-slice-profile-selector
+              proxy: true
+          id: network_slice_profile_selector_vnf
+          config-access:
+            ssh-access:
+              default-user: ubuntu
+              required: true
+          initial-config-primitive:
+          - execution-environment-ref: configure-vnf
+            name: config
+            parameter:
+            - name: ssh-hostname
+              value: <rw_mgmt_ip>
+            - name: ssh-username
+              value: ubuntu
+            - name: ssh-password
+              value: tutorial
+            seq: 1
+          - execution-environment-ref: configure-vnf
+            name: change-network-slice-profile
+            parameter:
+              - name: profile
+                data-type: STRING
+                value: <profile>
+            seq: 2
+          config-primitive:
+          - name: change-network-slice-profile
+            execution-environment-ref: configure-vnf
+            parameter:
+              - name: profile
+                data-type: STRING
+  ext-cpd:
+  - id: vnf-vdu1-ext
+    int-cpd:
+      cpd: vdu1-int-out
+      vdu-id: vdu1
+  sw-image-desc:
+  - id: "ubuntu-20.04-server-cloudimg-amd64"
+    image: "ubuntu-20.04-server-cloudimg-amd64"
+    name: "ubuntu-20.04-server-cloudimg-amd64"
+  vdu:
+  - cloud-init-file: cloud-config.txt
+    id: vdu1
+    int-cpd:
+    - id: vdu1-int-out
+      virtual-network-interface-requirement:
+      - name: vdu1-out
+        virtual-interface:
+          type: PARAVIRT
+    - id: vdu1-int-in
+      int-virtual-link-desc: internal-vl
+      virtual-network-interface-requirement:
+      - name: vdu1-in
+        virtual-interface:
+          type: PARAVIRT
+    name: vdu1
+    sw-image-desc: "ubuntu-20.04-server-cloudimg-amd64"
+    virtual-compute-desc: vdu1-compute
+    virtual-storage-desc:
+    - vdu1-storage
+  version: "1.0"
+  virtual-compute-desc:
+  - id: vdu1-compute
+    virtual-cpu:
+      num-virtual-cpu: "1"
+    virtual-memory:
+      size: "1.0"
+  virtual-storage-desc:
+  - id: vdu1-storage
+    size-of-storage: "10"

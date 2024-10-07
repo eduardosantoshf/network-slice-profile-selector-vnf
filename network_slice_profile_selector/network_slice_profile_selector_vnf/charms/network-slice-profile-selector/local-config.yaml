@@ -1,0 +1,6 @@
+# this parameters should be adapted to
+# the characteristics of your destination VM
+network-slice-profile-selector:
+        ssh-hostname: 10.255.28.174
+        ssh-username: ubuntu
+        ssh-password: password

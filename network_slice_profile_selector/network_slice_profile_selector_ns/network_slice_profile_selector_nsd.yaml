@@ -1,0 +1,22 @@
+nsd:
+  nsd:
+  - description: A NS that interacts with the ITAv Network Slicing API and Changes the Profile of a Network Slice 
+    df:
+    - id: default-df
+      vnf-profile:
+      - id: "1"
+        virtual-link-connectivity:
+        - constituent-cpd-id:
+          - constituent-base-element-id: "1"
+            constituent-cpd-id: vnf-vdu1-ext # this must be equal to the vdu's ext-cpd's id 
+          virtual-link-profile-id: mgmtnet_2
+        vnfd-id: network_slice_profile_selector_vnf
+    id: network_slice_profile_selector_ns
+    name: network_slice_profile_selector_ns
+    version: "1.0"
+    virtual-link-desc:
+    - id: mgmtnet_2
+      mgmt-network: true
+      vim-network-name: new_5gasp
+    vnfd-id:
+    - network_slice_profile_selector_vnf
